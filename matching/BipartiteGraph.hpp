@@ -12,10 +12,10 @@ class BipartiteGraph {
         int rigth_vertex_number;
         std::vector< std::vector<int> > link_list;
         
+    public:
+        
         TransportationNetwork createTransportationNetwork();
         void loadFromTransportationNetwork(TransportationNetwork&);
-        
-    public:
         BipartiteGraph();
         BipartiteGraph(const int&, const int&);
         ~BipartiteGraph();

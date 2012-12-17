@@ -98,7 +98,7 @@ int TransportationNetwork::getArcFlow(const int &node_from, const int &node_to) 
 
 // Определение величины потока, который можно пустить по дополняющей цепи
 int TransportationNetwork::calculateFlowPathValue(std::vector<int> &flow_path) {
-    int flow_path_value = 100;
+    int flow_path_value = 2000000;
 
     std::vector<int>::iterator node = flow_path.begin();
     for (node++; node != flow_path.end(); node++ ) {
@@ -127,6 +127,17 @@ void TransportationNetwork::upgradeNetworkFlow(std::vector<int> &flow_path) {
     std::vector<int>::iterator node = flow_path.begin();
     for (node++; node != flow_path.end(); node++ )
         this->upgradeArcFlow(*(node-1), *node, flow_path_value);
+}
+
+// Нахождение максимального потока сети. Алгоритм Форда-Фолкерсона.
+TransportationNetwork TransportationNetwork::getMaximumFlow() {
+    this->newFlow();
+
+    std::vector<int> flow_path = this->findComplementaryFlowPath();
+    for (; flow_path.size() != 0; flow_path = this->findComplementaryFlowPath())
+        this->upgradeNetworkFlow(flow_path);
+    
+    return this->getNetworkFromFlow();
 }
 
 // Обход графа поиском в ширину, и возврат нового, состоящего только из ребер, 
@@ -163,17 +174,6 @@ TransportationNetwork TransportationNetwork::getNetworkFromFlow() {
         }
     }
     return new_network;
-}
-
-// Нахождение максимального потока сети. Алгоритм Форда-Фолкерсона.
-TransportationNetwork TransportationNetwork::getMaximumFlow() {
-    this->newFlow();
-
-    std::vector<int> flow_path = this->findComplementaryFlowPath();
-    for (; flow_path.size() != 0; flow_path = this->findComplementaryFlowPath())
-        this->upgradeNetworkFlow(flow_path);
-    
-    return this->getNetworkFromFlow();
 }
 
 std::ofstream& operator << (std::ofstream &stream, TransportationNetwork &network) {

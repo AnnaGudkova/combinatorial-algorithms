@@ -50,7 +50,8 @@ void BipartiteGraph::loadFromTransportationNetwork(TransportationNetwork &networ
         for (int rigth_vertex_count=0; rigth_vertex_count < this->rigth_vertex_number; rigth_vertex_count++) {
             int vertex_link;
             vertex_link = capacity_adjacency_matrix[1+left_vertex_count][1+this->left_vertex_number+rigth_vertex_count];
-            this->link_list[left_vertex_count][rigth_vertex_count] = vertex_link % 2;
+            vertex_link = vertex_link ? 1 : 0;
+            this->link_list[left_vertex_count][rigth_vertex_count] = vertex_link;
         }
 }
 
@@ -65,10 +66,12 @@ BipartiteGraph BipartiteGraph::getMaximumMatchingGraph() {
 std::vector<int> BipartiteGraph::getMaximumMatchingVector() {
     std::vector<int> matching_vector(this->left_vertex_number);
     BipartiteGraph graph = this->getMaximumMatchingGraph();
-    for (int left_vertex_count=0; left_vertex_count < this->left_vertex_number; left_vertex_count++) 
+    for (int left_vertex_count=0; left_vertex_count < this->left_vertex_number; left_vertex_count++) {
+        matching_vector[left_vertex_count] = -1;
         for (int rigth_vertex_count=0; rigth_vertex_count < this->rigth_vertex_number; rigth_vertex_count++)
             if (graph.link_list[left_vertex_count][rigth_vertex_count])
                 matching_vector[left_vertex_count] = rigth_vertex_count;
+    }
     return matching_vector;
 }
 
