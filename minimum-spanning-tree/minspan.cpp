@@ -2,11 +2,11 @@
 #include <fstream>
 
 #include "DisjointSetUnion.hpp"
-#include "WeightedDirectedGraph.hpp"
+#include "WeightedGraph.hpp"
 
 int main(int argc, char **argv) {
-    WeightedDirectedGraph graph;
-    WeightedDirectedGraph minimum_spanning_tree;
+    WeightedGraph graph;
+    WeightedGraph minimum_spanning_tree;
 
     std::ifstream input_stream;
     std::ofstream output_stream;

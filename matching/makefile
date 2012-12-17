@@ -1,5 +1,5 @@
-headers = DisjointSetUnion WeightedGraph
-program_name = minspan
+headers = TransportationNetwork BipartiteGraph
+program_name = matching
 
 source_names = $(addsuffix .cpp, $(headers))
 

@@ -1,10 +1,10 @@
-#include "WeightedDirectedGraph.hpp"
+#include "WeightedGraph.hpp"
 
-WeightedDirectedGraph::WeightedDirectedGraph() {}
+WeightedGraph::WeightedGraph() {}
 
-WeightedDirectedGraph::~WeightedDirectedGraph() {}
+WeightedGraph::~WeightedGraph() {}
 
-std::vector< std::pair<int, std::pair<int, int> > > WeightedDirectedGraph::getEdgeVector() {
+std::vector< std::pair<int, std::pair<int, int> > > WeightedGraph::getEdgeVector() {
     std::set<std::pair< int, std::pair<int, int> > > edge_set;
     for (unsigned int vertex_counter=0; vertex_counter != this->adjacency_list.size(); vertex_counter++) {
         for (unsigned int child_counter=0; child_counter != this->adjacency_list[vertex_counter].size(); child_counter++) {
@@ -28,8 +28,8 @@ std::vector< std::pair<int, std::pair<int, int> > > WeightedDirectedGraph::getEd
     return edge_vector;
 }
 
-WeightedDirectedGraph WeightedDirectedGraph::graphFromEdges(std::vector< std::pair<int, std::pair<int, int> > > edge_vector) {
-    WeightedDirectedGraph return_graph;
+WeightedGraph WeightedGraph::graphFromEdges(std::vector< std::pair<int, std::pair<int, int> > > edge_vector) {
+    WeightedGraph return_graph;
     return_graph.adjacency_list.resize(this->adjacency_list.size());
 
     for (unsigned int edge_counter=0; edge_counter < edge_vector.size(); edge_counter++) {
@@ -50,7 +50,7 @@ WeightedDirectedGraph WeightedDirectedGraph::graphFromEdges(std::vector< std::pa
     return return_graph;
 }
 
-WeightedDirectedGraph WeightedDirectedGraph::getMinimumSpanningTree() {
+WeightedGraph WeightedGraph::getMinimumSpanningTree() {
     std::vector< std::pair<int, std::pair<int, int> > > edge_vector; 
     edge_vector = this->getEdgeVector();
     DisjointSetUnion dsu;
@@ -71,7 +71,7 @@ WeightedDirectedGraph WeightedDirectedGraph::getMinimumSpanningTree() {
     return this->graphFromEdges(minimum_spanning_tree_edge_vector);
 }
 
-std::ifstream& operator >> (std::ifstream& stream, WeightedDirectedGraph &graph) {
+std::ifstream& operator >> (std::ifstream& stream, WeightedGraph &graph) {
     int vertex_number;
     stream >> vertex_number;
     graph.adjacency_list.resize(vertex_number);
@@ -88,7 +88,7 @@ std::ifstream& operator >> (std::ifstream& stream, WeightedDirectedGraph &graph)
     return stream;
 }
 
-std::ofstream& operator << (std::ofstream& stream, WeightedDirectedGraph &graph) {
+std::ofstream& operator << (std::ofstream& stream, WeightedGraph &graph) {
     int weight = 0;
     for (unsigned int vertex_counter=0; vertex_counter != graph.adjacency_list.size(); vertex_counter++) {
         for (unsigned int child_counter=0; child_counter != graph.adjacency_list[vertex_counter].size(); child_counter++) {
